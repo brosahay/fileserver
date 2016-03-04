@@ -4,9 +4,6 @@
 }
 body{
 	font-family: "Source Code Pro";
-	height: 100%;
-	width: 100%;
-	margin: 0;
 }
 footer{
 	position: fixed;
@@ -23,16 +20,4 @@ footer{
 footer a,footer a:hover{
 	color: white;
 	text-decoration: none;
-}
-.sidebar{
-	position: fixed;
-	top: 0;
-	height: 100%;
-	background-color: #222;
-  border-color: #080808;
-}
-.system_status{
-	position: absolute;
-  bottom: 30px;
-  color: white;
 }

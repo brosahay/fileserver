@@ -13,7 +13,7 @@
 		<div class='row'>
 
 			<!-- SYSTEM STATUS -->
-			<div class='col-md-2 hidden-xs sidebar'>
+			<div class='col-md-2 hidden-xs'>
 				<div class="panel panel-primary">
 					<div class="panel-heading">SYSTEM STATUS</div>
 					<div class="panel-body">
@@ -23,7 +23,7 @@
 			</div>
 
 			<!-- PATH NAVBAR -->
-			<div class='col-md-offset-3 col-md-8'>
+			<div class='col-md-offset-1 col-md-8'>
 				<ol class='breadcrumb'>
 					<li><a href='folder_1'>folder_1</a></li>
 					<li><a href='folder_2'>folder_2</a></li>
