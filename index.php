@@ -14,7 +14,11 @@
 
 			<!-- SYSTEM STATUS -->
 			<div class='col-md-2 hidden-xs sidebar'>
-				<div class='system_status'>
+				<div class="panel panel-primary">
+					<div class="panel-heading">SYSTEM STATUS</div>
+					<div class="panel-body">
+						Panel content
+					</div>
 				</div>
 			</div>
 
@@ -34,11 +38,19 @@
 						<th>HITS</th>
 					</thead>
 					<tbody>
-					</tbody>
-				</table>
+						<tr><td style='width:50px'><a href='#'><button type='button' class='btn btn-success'><span class='glyphicon glyphicon-download'></span></button></a></td>
+							<td><a href='.?current=$value'>folder_1</a></td>
+							<td>$file_size</td>
+							<td>$file_hits</td></tr>
+							<tr><td style='width:50px'><a href='#'><button type='button' class='btn btn-success'><span class='glyphicon glyphicon-download'></span></button></a></td>
+								<td><a href='?current=$value'>file_1</a></td>
+								<td>$file_size</td>
+								<td>file_hits</td></tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-	<footer class='navbar-inverse'>Made with &hearts; <a href="#">htaccess</a></footer>
-</body>
-</html>
+			<footer class='navbar-inverse'>Made with &hearts; <a href="#">htaccess</a></footer>
+		</body>
+		</html>
