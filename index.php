@@ -8,16 +8,16 @@ function uptime(){
 			$days = explode(".",(($uptime % 31556926) / 86400));
 			$hours = explode(".",((($uptime % 31556926) % 86400) / 3600));
 			$minutes = explode(".",(((($uptime % 31556926) % 86400) % 3600) / 60));
-			$time = ".";
-			if ($minutes > 0)
+			$time = "";
+			if ($minutes[0] > 0)
 				$time=$minutes[0]." mins".$time;
-			if ($minutes > 0 && ($hours > 0 || $days > 0))
-				$time = ", ".$time;
-			if ($hours > 0)
+			if ($minutes[0] > 0 && ($hours[0] > 0 || $days[0] > 0))
+				$time = "<br> ".$time;
+			if ($hours[0] > 0)
 				$time = $hours[0]." hours".$time;
-			if ($hours > 0 && $days > 0)
-				$time = ", ".$time;
-			if ($days > 0)
+			if ($hours[0] > 0 && $days[0] > 0)
+				$time = "<br> ".$time;
+			if ($days[0] > 0)
 				$time = $days[0]." days".$time;
 		} else {
 			$time = false;
@@ -65,13 +65,15 @@ function FileSizeConvert($bytes){
 }
 if(isset($_GET['current'])  && !empty($_GET['current'])){
 	$current=$_GET['current'];
-	if($current == '.')
+	if($current == '.' || $current=='..'){
+		header('Location: index.php');
 		$current = "";
+	}
 }
 else{
 	$current = '.';
 }
-	$files = scandir($current);
+$files = scandir($current,1);
 ?>
 <html>
 <head>
@@ -89,11 +91,13 @@ else{
 
 			<!-- SYSTEM STATUS -->
 			<div class='col-md-3 hidden-xs sidebar'>
-				<div class="panel panel-primary">
-					<div class="panel-heading">SYSTEM STATUS</div>
-					<div class="panel-body">
-						<span class="label label-info">SERVER</span>:<span><?php echo (gethostname()); ?></span><br>
-						<span class="label label-info">UPTIME</span>:<span><?php echo uptime(); ?></span>
+				<div class="panel panel-primary" style="position: relative;top: 75%;">
+					<div class="panel-heading"><b>SYSTEM STATUS</b></div>
+					<div class="panel-body table-responsive">
+						<table class="table table-condensed">
+							<tr> <th class="label label-info" style="width:50px">SERVER:</th><td><?php echo (gethostname()); ?></td></tr>
+							<tr> <th class="label label-info" style="width:50px">UPTIME:</th><td><?php echo uptime(); ?></td></tr>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -117,34 +121,35 @@ else{
 					?>
 				</ol>
 				<!-- TABLE OF CONTENTS -->
-				<table class="table table-hover">
-					<thead>
-						<th>#</th>
-						<th>FILENAME</th>
-						<th>SIZE</th>
-						<th>HITS</th>
-					</thead>
-					<tbody>
-						<?php
-						foreach ($files as $key => $value) {
-							if(!($value=='.' or $value=='..' or $value=='index.php' or $value=='css' or $value=='js' or $value=='fonts' or $value=='less' or $value=='scss' or $value=='img')){
-								if(is_dir($current.'/'.$value)){
-									echo "<tr>
-												<th scope='row' style='width:50px'><span class='glyphicon glyphicon-folder-open'></span></th>";
-									echo "<td><a href='index.php?current=$current/$value'>$value</a></td>";
-									echo "<td>DIRECTORY</td>";
-								}
-								else
-								{
-									echo "<tr>
-												<th scope='row' style='width:50px'><span class='glyphicon glyphicon-file'></span></th>";
-									echo "<td><a href='$current/$value'>$value</a></td>";
-									$file_size=filesize($value);
-									$file_size=FileSizeConvert($file_size);
-									echo "<td>$file_size</td>";
-								}
-								echo "<td>9999</td>
-											</tr>";
+				<div class="table-responsive">
+					<table class="table table-hover table-condensed">
+						<thead>
+							<th>#</th>
+							<th  class="text-center">FILENAME</th>
+							<th  class="text-center">SIZE</th>
+							<th  class="text-center">HITS</th>
+						</thead>
+						<tbody>
+							<?php
+							foreach ($files as $key => $value) {
+								if(!($value=='.' or $value=='..' or $value=='index.php' or $value=='css' or $value=='js' or $value=='fonts' or $value=='less' or $value=='scss' or $value=='img' or $value=='.git' or $value=='.htaccess')){
+									if(is_dir($current.'/'.$value)){
+										echo "<tr>
+										<th scope='row' style='width:60px'><a href='$current/$value' target='_blank'><button type='button' class='btn btn-success'><i class='fa fa-globe' aria-hidden='true'></i></button></a></th>";
+										echo "<td><a href='index.php?current=$current/$value'>$value</a></td>";
+										echo "<td class='text-center'><b>DIR</b></td>";
+									}
+									else
+									{
+										echo "<tr>
+										<th scope='row' style='width:60px'><a href='$current/$value'><button type='button' class='btn btn-success'><span class='glyphicon glyphicon-download'></span></button></a></th>";
+										echo "<td><a href='$current/$value'>$value</a></td>";
+										$file_size=filesize($value);
+										$file_size=FileSizeConvert($file_size);
+										echo "<td class='text-center'>$file_size</td>";
+									}
+									echo "<td class='text-center'>9999</td>
+								</tr>";
 							}
 						}
 						?>
@@ -153,6 +158,7 @@ else{
 			</div>
 		</div>
 	</div>
-	<footer class='navbar-inverse'>Made with &hearts; <a href="#">htaccess</a></footer>
+</div>
+<footer class='navbar-inverse'>Made with &hearts; <a href="#">htaccess</a></footer>
 </body>
 </html>
