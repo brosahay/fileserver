@@ -66,7 +66,7 @@ function FileSizeConvert($bytes){
 if(isset($_GET['current'])  && !empty($_GET['current'])){
 	$current=$_GET['current'];
 	if($current == '.')
-		$current = $_SERVER["DOCUMENT_ROOT"];
+		$current = "";
 }
 else{
 	$current = '.';
@@ -105,21 +105,15 @@ else{
 					$path_list = explode("/", $current);
 					$print_path ="";
 					foreach ($path_list as $key => $value) {
-						$print_path .='/'.$value;
-						echo "<li><a href='index.php?current=$print_path'>$value</a></li>";
+						if($print_path==''){
+							echo "<li><a href='index.php?current=$print_path'>home</a></li>";
+							$print_path =$value;
+						}
+						else{
+							$print_path .='/'.$value;
+							echo "<li><a href='index.php?current=$print_path'>$value</a></li>";
+						}						
 					}
-					/*$abspath = realpath($current);
-					$server_root=$_SERVER["DOCUMENT_ROOT"];
-					$abspath=str_replace($server_root,"index.php",$abspath);
-					$abspath_list = explode("/",$abspath);
-					$crumb_path="";
-					foreach ($abspath_list as $key => $value) {
-						if(!($value=='..' || $value=='.' || $value=="index.php"))
-						$crumb_path .='/'.$value;
-					else
-						$crumb_path=$value;
-						echo "<li><a href='?current=$crumb_path'>$value</a></li>";
-					}*/
 					?>
 				</ol>
 				<!-- TABLE OF CONTENTS -->
@@ -134,17 +128,17 @@ else{
 						<?php
 						foreach ($files as $key => $value) {
 							if(!($value=='.' or $value=='..' or $value=='index.php' or $value=='css' or $value=='js' or $value=='fonts' or $value=='less' or $value=='scss' or $value=='img')){
-								if(is_dir($print_path.'/'.$value)){
+								if(is_dir($current.'/'.$value)){
 									echo "<tr>
 												<th scope='row' style='width:50px'><span class='glyphicon glyphicon-folder-open'></span></th>";
-									echo "<td><a href='index.php?current=$print_path/$value'>$value</a></td>";
+									echo "<td><a href='index.php?current=$current/$value'>$value</a></td>";
 									echo "<td>DIRECTORY</td>";
 								}
 								else
 								{
 									echo "<tr>
 												<th scope='row' style='width:50px'><span class='glyphicon glyphicon-file'></span></th>";
-									echo "<td><a href='$print_path/$value'>$value</a></td>";
+									echo "<td><a href='$current/$value'>$value</a></td>";
 									$file_size=filesize($value);
 									$file_size=FileSizeConvert($file_size);
 									echo "<td>$file_size</td>";
