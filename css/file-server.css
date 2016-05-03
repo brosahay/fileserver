@@ -1,0 +1,38 @@
+.navbar{
+	border-radius: 0px;
+	z-index: 10;
+}
+body{
+	font-family: "Source Code Pro";
+}
+footer{
+	position: fixed;
+	margin: 0;
+	bottom: 0;
+	height: 2em;
+	line-height: 2em;
+	width:100%;
+	text-align: center;
+	color: white;
+	text-decoration: none;
+	font-size: smaller;
+}
+footer a,footer a:hover{
+	color: white;
+	text-decoration: none;
+}
+.main {
+    padding: 20px;
+}
+.sidebar {
+	position: fixed;
+	top: 51px;
+	bottom: 0;
+	left: 0;
+	display: block;
+	padding: 20px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background-color: #222;
+	border-right: 1px solid #080808;
+}
